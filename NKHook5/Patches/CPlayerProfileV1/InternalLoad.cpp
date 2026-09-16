@@ -6,6 +6,8 @@
 #include "../../Util/FlagManager.h"
 
 #include <Logging/Logger.h>
+#include <fstream>
+#include <string>
 
 extern NKHook5::Util::FlagManager g_towerFlags;
 
@@ -22,10 +24,48 @@ namespace NKHook5
             using namespace Common::Logging::Logger;
 
             static uint64_t o_func;
+
+            static void DumpProfileToDisk(Classes::CPlayerProfileV1* profile, const char* path = "CPlayerProfileV1_dump.bin")
+            {
+                if (!profile) {
+                    Print("Cannot dump profile: null pointer");
+                    return;
+                }
+
+                std::ofstream out(path, std::ios::binary | std::ios::trunc);
+                if (!out) {
+                    Print("Failed to open profile dump file: %s", path);
+                    return;
+                }
+
+                out.write(reinterpret_cast<const char*>(profile), sizeof(Classes::CPlayerProfileV1));
+
+                if (!out) {
+                    Print("Failed while writing profile dump file: %s", path);
+                    return;
+                }
+
+                Print("Dumped CPlayerProfileV1 (%llu bytes) to %s",
+                    static_cast<unsigned long long>(sizeof(Classes::CPlayerProfileV1)),
+                    path);
+            }
+
             bool __fastcall cb_hook(Classes::CPlayerProfileV1* profile, int pad, class CBaseFileIO* pFileIO, nfw::string fileName, bool param_3) {
                 bool result = PLH::FnCast(o_func, &cb_hook)(profile, pad, pFileIO, fileName, param_3);
+
+                // Dump the loaded profile before we modify it.
+                if (result) {
+					// Dump the loaded profile before we modify it.
+					//DumpProfileToDisk(profile);
+
+					// Force the 4-byte integer at offset 0x168 to be 2
+					*reinterpret_cast<int32_t*>(reinterpret_cast<uintptr_t>(profile) + 0x168) = 2;
+					Print("Forced profile offset 0x168 to 2");
+				}
+
                 /*SaveData* customData = SaveData::GetInstance();
                 customData->Load("./Modded.save");*/
+
                 //Add all towers to the profile
                 Print("Adding all towers to save...");
                 const auto& allTowerFlags = g_towerFlags.GetAll();

@@ -107,7 +107,7 @@ endif()
 FetchContent_Declare(
     libhat
     GIT_REPOSITORY https://github.com/BasedInc/libhat.git
-    GIT_TAG master
+    GIT_TAG v0.7.0
 )
 FetchContent_GetProperties(libhat)
 if(NOT libhat_POPULATED)
@@ -137,6 +137,7 @@ FetchContent_Declare(
 FetchContent_GetProperties(jsonspirit)
 if(NOT jsonspirit_POPULATED)
     FetchContent_Populate(jsonspirit)
+	set(BUILD_TESTING OFF)
     set(BUILD_STATIC_LIBRARIES ON)
     set(BUILD_STATIC_LIBS ON)
     set(JSON_SPIRIT_DEMOS OFF)

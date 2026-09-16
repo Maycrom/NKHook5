@@ -66,7 +66,7 @@ void PatchManager::ApplyAll()
     PatchManager::ApplyPatch(new CFlagStringConvertor::StringToFlag());
     //PatchManager::ApplyPatch(new CGameScreen::Init());
     PatchManager::ApplyPatch(new CPlayerProfileV1::InternalLoad());
-    //PatchManager::ApplyPatch(new CPlayerProfileV1::Save());
+    PatchManager::ApplyPatch(new CPlayerProfileV1::Save());
     PatchManager::ApplyPatch(new CProjectile::Clone());
     PatchManager::ApplyPatch(new CProjectile::Update());
     PatchManager::ApplyPatch(new CSettingsScreen::InitLayout());
@@ -84,7 +84,7 @@ void PatchManager::ApplyAll()
     PatchManager::ApplyPatch(new OpenGL::Swapbuffers());
     PatchManager::ApplyPatch(new Screens::GetScreenForParadigm());
     PatchManager::ApplyPatch(new Unknown::CrtMalloc());
-    //PatchManager::ApplyPatch(new Unknown::GetDeltaLock60FPS());
+    PatchManager::ApplyPatch(new Unknown::GetDeltaLock60FPS());
     PatchManager::ApplyPatch(new Unknown::WinMain());
 }
 
