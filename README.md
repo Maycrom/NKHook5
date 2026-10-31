@@ -6,7 +6,6 @@ A mod loader for Bloons TD 5 that greatly extends modding capabilities
 2. Download NKHook5.dll (This is the mod loader)
 3. Copy wininet.dll into your game's folder
 4. Copy NKHook5.dll into your game's folder
-5. Create a "Mods" folder in your game's folder
 
 # Startup list
 NKHook5 changes how Bloons TD 5 loads in a few ways, heres a list comparing vanilla to NKH5.
